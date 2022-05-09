@@ -7,7 +7,7 @@ public class PlayerController : MyCharacterController
     [SerializeField] private ScreenTouchController input;
     [SerializeField] private ShootController shootController;
     [SerializeField] private GameObject rightHandPlayer;
-    //[SerializeField] private GameObject leftHandPlayer;
+    [SerializeField] private GameObject hand;
     private readonly List<Transform> _enemies = new List<Transform>();
     private bool _isShooting;
     private int _enemyAmount;
@@ -24,7 +24,8 @@ public class PlayerController : MyCharacterController
     {
         if(_enemies.Count > 0)
         {
-            transform.LookAt(_enemies[0]);
+            hand.transform.LookAt(_enemies[0]);
+            //transform.LookAt(_enemies[0]);
         }
     }
     private void OnCollisionEnter(Collision collision) 
