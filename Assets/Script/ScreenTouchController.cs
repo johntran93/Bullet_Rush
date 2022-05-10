@@ -11,16 +11,19 @@ public class ScreenTouchController : MonoBehaviour, IPointerDownHandler, IPointe
        _touchPosition = eventData.position;
        pivotImage.enabled = true;
        pivotImage.transform.position = _touchPosition;
+       PlayerController.Instance.SetAnimationRunTrue();
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         Direction = Vector3.zero;
         pivotImage.enabled = false;
+        PlayerController.Instance.SetAnimationRunFalse();
     }
     public void OnDrag(PointerEventData eventData)
     {
        var delta = eventData.position - _touchPosition;
        Direction = delta.normalized;
+       PlayerController.Instance.SetAnimationRunTrue();
     }
 }

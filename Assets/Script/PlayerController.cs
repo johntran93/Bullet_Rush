@@ -4,6 +4,7 @@ using System.Collections;
 
 public class PlayerController : MyCharacterController
 {
+    public static PlayerController Instance { get; private set; }
     [SerializeField] private ScreenTouchController input;
     [SerializeField] private ShootController shootController;
     [SerializeField] private GameObject rightHandPlayer;
@@ -13,9 +14,15 @@ public class PlayerController : MyCharacterController
     private readonly List<Transform> _enemies = new List<Transform>();
     private bool _isShooting;
     private int _enemyAmount;
+    Animator ani;
+    private void Awake()
+		{
+			Instance = this;
+		}
     private void Start() 
     {
         _enemyAmount = FindObjectsOfType<EnemyController>().Length;
+        ani = gameObject.GetComponent<Animator>();
     }
     private  void FixedUpdate() 
     {
@@ -28,19 +35,20 @@ public class PlayerController : MyCharacterController
         {
             rightHand.transform.LookAt(_enemies[0]);
             leftHand.transform.LookAt(_enemies[0]);
-            //transform.LookAt(_enemies[0]);
         }
     }
     private void OnCollisionEnter(Collision collision) 
     {
         if(collision.transform.CompareTag("Enemy"))
         {
-            Dead();
+            StartCoroutine(Dead());
         }
     }
-    private void Dead()
+    IEnumerator Dead()
     {
         Debug.Log("Dead");
+        ani.SetBool("Falling", true);
+        yield return new WaitForSeconds(0.75f);
         Time.timeScale = 0;
     }
     private void OnTriggerEnter(Collider other) 
@@ -102,5 +110,13 @@ public class PlayerController : MyCharacterController
             float success = Mathf.Lerp(100, 0, result);
             Debug.Log($"Complete {success}%");
         }
+    }
+    public void SetAnimationRunTrue()
+    {
+        ani.SetBool("Run", true);
+    }
+    public void SetAnimationRunFalse()
+    {
+        ani.SetBool("Run", false);
     }
 }
