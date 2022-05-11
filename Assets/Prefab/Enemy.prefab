@@ -130,7 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myRigidbody: {fileID: 1770410316126481371}
   moveSpeed: 200
-  player: {fileID: 0}
+  deadParticlePrefab: {fileID: 6960326994843833807, guid: 6586ff0f14125534cae2f5d8f04b7871, type: 3}
 --- !u!1 &6172345113256884995
 GameObject:
   m_ObjectHideFlags: 0

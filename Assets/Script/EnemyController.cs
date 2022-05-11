@@ -2,16 +2,10 @@ using UnityEngine;
 
 public class EnemyController : MyCharacterController
 {
-    [SerializeField] GameObject player;
-    private void Start() 
-    {
-        if(player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player");
-        }
-    }
+    [SerializeField] private ParticleController deadParticlePrefab;
     private  void FixedUpdate() 
     {
+        var player = PlayerController.Instance;
         var delta = -transform.position + player.transform.position;
         delta.y = 0;
         var direction = delta.normalized;
@@ -24,6 +18,8 @@ public class EnemyController : MyCharacterController
         {
             gameObject.SetActive(false);
             other.gameObject.SetActive(false);
+            Instantiate(deadParticlePrefab, transform.position, Quaternion.identity);
         }
     }
 }
+
