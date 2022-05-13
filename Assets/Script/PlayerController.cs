@@ -13,7 +13,6 @@ public class PlayerController : MyCharacterController
     [SerializeField] private GameObject leftHand;
     private readonly List<Transform> _enemies = new List<Transform>();
     private bool _isShooting;
-    private int _enemyAmount;
     Animator ani;
     private void Awake()
 		{
@@ -21,7 +20,6 @@ public class PlayerController : MyCharacterController
 		}
     private void Start() 
     {
-        _enemyAmount = FindObjectsOfType<EnemyController>().Length;
         ani = gameObject.GetComponent<Animator>();
     }
     private  void FixedUpdate() 
@@ -55,7 +53,7 @@ public class PlayerController : MyCharacterController
     {
         if(other.CompareTag("Finish"))
         {
-            Win();
+            OnReachSavePoint();
         }
     }
     private void OnTriggerStay(Collider other) 
@@ -101,16 +99,6 @@ public class PlayerController : MyCharacterController
        }
        
     }
-    private void Win() {
-        {
-            Debug.Log("Win");
-            Time.timeScale = 0;
-            int current = FindObjectsOfType<EnemyController>().Length;
-            float result = current / (float)_enemyAmount;
-            float success = Mathf.Lerp(100, 0, result);
-            Debug.Log($"Complete {success}%");
-        }
-    }
     public void SetAnimationRunTrue()
     {
         ani.SetBool("Run", true);
@@ -118,5 +106,9 @@ public class PlayerController : MyCharacterController
     public void SetAnimationRunFalse()
     {
         ani.SetBool("Run", false);
+    }
+    private void OnReachSavePoint()
+    {
+        GameManager.Instance.Win();
     }
 }
