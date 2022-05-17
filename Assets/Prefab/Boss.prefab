@@ -130,6 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myRigidbody: {fileID: 1204924104118755321}
   moveSpeed: 200
+  howclose: 15
   deadParticlePrefab: {fileID: 6960326994843833807, guid: 6586ff0f14125534cae2f5d8f04b7871, type: 3}
   maxHealth: 20
 --- !u!1 &6737827004527234849
