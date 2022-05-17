@@ -40,9 +40,5 @@ public class GameManager : MonoBehaviour
         //Time.timeScale = 0;
         isRun = false;
         wingameUI.SetActive(true);
-        var current = FindObjectsOfType<EnemyController>().Length;
-        var result = current / (float)EnemyAmount;
-        var success = Mathf.Lerp(100, 0, result);
-        Debug.Log(success);
     }
 }

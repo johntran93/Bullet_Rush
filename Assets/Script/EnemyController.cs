@@ -6,22 +6,20 @@ public class EnemyController : MyCharacterController
     [SerializeField] private float maxHealth;
     private float helth;
     private float dist;
-    private Transform player;
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         GameManager.Instance.EnemyAmount++;
         helth = maxHealth;
     }
     private  void FixedUpdate() 
     {
-        dist = Vector3.Distance(player.position, transform.position);
-        if(dist <= howclose)
-        {
         var player = PlayerController.Instance;
+        dist = Vector3.Distance(player.transform.position, transform.position);
         var delta = -transform.position + player.transform.position;
         delta.y = 0;
         var direction = delta.normalized;
+        if(dist <= howclose)
+        {
         Move(direction);
         transform.LookAt(player.transform);
         }
