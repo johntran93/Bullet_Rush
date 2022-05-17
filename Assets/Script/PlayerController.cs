@@ -45,7 +45,7 @@ public class PlayerController : MyCharacterController
     IEnumerator Dead()
     {
         Debug.Log("Dead");
-        ani.SetBool("Falling", true);
+        ani.SetTrigger("Falling");
         yield return new WaitForSeconds(0.75f);
         Time.timeScale = 0;
     }
