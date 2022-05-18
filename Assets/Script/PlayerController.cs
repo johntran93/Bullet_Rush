@@ -29,10 +29,15 @@ public class PlayerController : MyCharacterController
     }
     private void Update() 
     {
-        if(_enemies.Count > 0)
+        if(_enemies.Count == 1)
         {
             rightHand.transform.LookAt(_enemies[0]);
             leftHand.transform.LookAt(_enemies[0]);
+        }
+        else if(_enemies.Count > 1)
+        {
+            rightHand.transform.LookAt(_enemies[0]);
+            leftHand.transform.LookAt(_enemies[1]);
         }
     }
     private void OnCollisionEnter(Collision collision) 
@@ -79,7 +84,7 @@ public class PlayerController : MyCharacterController
     {
        IEnumerator Do()
        {
-           while(_enemies.Count > 0)
+           if(_enemies.Count == 1)
            {
                 var enemy = _enemies[0];
                 var direction = enemy.transform.position - transform.position;
@@ -87,6 +92,22 @@ public class PlayerController : MyCharacterController
                 direction = direction.normalized;
                 shootController.Shoot(direction, rightHandPlayer.transform.position);
                 shootController.Shoot(direction, leftHandPlayer.transform.position);
+                _enemies.RemoveAt(0);
+                yield return new WaitForSeconds(shootController.Delay);
+           }
+           else if(_enemies.Count > 1)
+           {
+                var enemy1 = _enemies[0];
+                var direction1 = enemy1.transform.position - transform.position;
+                direction1.y = 0;
+                direction1 = direction1.normalized;
+                shootController.Shoot(direction1, rightHandPlayer.transform.position);
+
+                var enemy2 = _enemies[1];
+                var direction2 = enemy2.transform.position - transform.position;
+                direction2.y = 0;
+                direction2 = direction2.normalized;
+                shootController.Shoot(direction2, leftHandPlayer.transform.position);
                 _enemies.RemoveAt(0);
                 yield return new WaitForSeconds(shootController.Delay);
            }
