@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
 
     private float SuccessValue => EnemyDeadCounter / (float)EnemyAmount;
     [SerializeField] private BarController barController;
-    public bool isRun;
     private void Awake()
     {
         Instance = this;
@@ -32,13 +31,11 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.2f);
         barController.Display(SuccessValue);
-        isRun = true;
     }
     public void Win()
     {
         Debug.Log("Win");
-        //Time.timeScale = 0;
-        isRun = false;
+        Time.timeScale = 0;
         wingameUI.SetActive(true);
     }
 }
